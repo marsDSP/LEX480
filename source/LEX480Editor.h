@@ -16,5 +16,14 @@ public:
 private:
     LEX480Processor& processorRef;
 
+    struct ParamControl
+    {
+        juce::Slider slider;
+        juce::Label label;
+        std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
+    };
+
+    std::array<ParamControl, 10> controls;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LEX480Editor)
 };

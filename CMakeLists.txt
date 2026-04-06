@@ -20,6 +20,7 @@ endif()
 project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
 
 add_subdirectory(libs/JUCE)
+add_subdirectory(libs/JUCE/extras/AudioPluginHost)
 
 # Project configuration
 set(CMAKE_CXX_STANDARD 23)
@@ -91,7 +92,30 @@ add_compile_definitions(JUCE_PROJECT_NAME="${PROJECT_NAME}")
 
 # Define SharedCode as an INTERFACE library (no sources required)
 add_library(SharedCode INTERFACE
-        source/LEX480Processor.h)
+        source/LEX480Processor.h
+        source/dsp/datt_convolver.h
+        source/dsp/buffers/buffer_iters.h
+        source/simd/simd_block.h
+        source/dsp/buffers/buffer_smoothed.cpp
+        source/dsp/buffers/buffer_smoothed.h
+        source/utils/parameters/param_utils.h
+        source/utils/parameters/param_types.h
+        source/utils/ptr_optional.h
+        source/utils/ptr_packed.h
+        source/dsp/datt_lattice.h
+        source/dsp/datt_input_network.h
+        source/dsp/datt_diffusor.cpp
+        source/dsp/datt_diffusor.h
+        source/dsp/datt_fdn.cpp
+        source/dsp/datt_fdn.h
+        source/dsp/datt_matrix.h
+        source/math/interpolator.h
+        source/utils/type_list.h
+        source/dsp/datt_convolution_engine.cpp
+        source/dsp/datt_convolution_engine.h
+        source/dsp/datt_filters.h
+        source/math/coeffcalc.h
+        source/math/ipow.h)
 
 # Set compile features for SharedCode
 target_compile_features(SharedCode INTERFACE cxx_std_23)
@@ -105,6 +129,7 @@ target_include_directories(SharedCode INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/libs"
         "${CMAKE_CURRENT_SOURCE_DIR}/libs/JUCE/modules"
         "${CMAKE_CURRENT_SOURCE_DIR}/libs/xsimd/include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/libs/gcem/include"
         "${GENERATED_DIR}"
 )
 
